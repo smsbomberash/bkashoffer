@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অনুগ্রহ করে অপেক্ষা করুন...</title>
+    
+    <!-- Facebook শেয়ারের প্রিভিউ সুন্দর করার জন্য Open Graph ট্যাগ -->
+    <meta property="og:title" content="বিস্তারিত দেখতে এখানে প্রবেশ করুন" />
+    <meta property="og:description" content="মাত্র কয়েক সেকেন্ডের মধ্যে মূল পেজে নিয়ে যাওয়া হচ্ছে..." />
+    <meta property="og:type" content="website" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f6f9;
+            text-align: center;
+        }
+        .card {
+            background: #ffffff;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 360px;
+            width: 90%;
+        }
+        h2 {
+            color: #222;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        #timer {
+            font-weight: bold;
+            color: #e2136e;
+            font-size: 18px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #e2136e;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+        .btn:hover {
+            background-color: #c10f5d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>মূল পেজে নিয়ে যাওয়া হচ্ছে...</h2>
+        <p>অনুগ্রহ করে <span id="timer">5</span> সেকেন্ড অপেক্ষা করুন। অটোমেটিক রিডাইরেক্ট না হলে নিচের বাটনে ক্লিক করুন।</p>
+        <a href="http://earntaka.com/bkash" class="btn">এখানে ক্লিক করুন</a>
+    </div>
+
+    <script>
+        const targetUrl = "http://earntaka.com/bkash";
+        let timeLeft = 5;
+        const timerElement = document.getElementById("timer");
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timerElement && timeLeft >= 0) {
+                timerElement.textContent = timeLeft;
+            }
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.replace(targetUrl);
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
